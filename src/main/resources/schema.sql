@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS organization (
     id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
     version    INTEGER NOT NULL     COMMENT 'Служебное поле hibernate',
-    full_name  VARCHAR(50) NOT NULL COMMENT 'Полное имя',
+    full_name  VARCHAR(100) NOT NULL COMMENT 'Полное имя',
     name       VARCHAR(50) NOT NULL COMMENT 'имя',
     inn        VARCHAR(10) NOT NULL COMMENT 'инн' UNIQUE,
     kpp        VARCHAR(10) NOT NULL COMMENT 'kpp' UNIQUE,
-    address    VARCHAR(50) NOT NULL COMMENT 'адрес',
+    address    VARCHAR(100) NOT NULL COMMENT 'адрес',
     phone      VARCHAR(20)          COMMENT 'телефон',
     is_active   BOOLEAN
 );
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS office (
     organization_id      INTEGER NOT NULL     COMMENT 'id Организации',
     version    INTEGER NOT NULL     COMMENT 'Служебное поле hibernate',
     name       VARCHAR(50) NOT NULL COMMENT 'название',
-    address    VARCHAR(50) NOT NULL COMMENT 'адрес',
+    address    VARCHAR(100) NOT NULL COMMENT 'адрес',
     phone      VARCHAR(20)          COMMENT 'телефон',
     is_active   BOOLEAN NOT NULL,
     FOREIGN KEY (organization_id) REFERENCES organization (id)
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS user_table (
     first_name  VARCHAR(50) NOT NULL COMMENT 'Имя',
     second_name VARCHAR(50)          COMMENT 'Фамилия',
     middle_name VARCHAR(50)          COMMENT 'Отчество',
-    `position`  VARCHAR(50) NOT NULL COMMENT 'Позиция',
+    post        VARCHAR(50) NOT NULL COMMENT 'Позиция',
     phone       VARCHAR(20)          COMMENT 'телефон',
     citizenship_code VARCHAR(3),
     is_identified BOOLEAN,
@@ -58,21 +58,20 @@ CREATE TABLE IF NOT EXISTS user_table (
 CREATE INDEX IX_user_first_name ON user_table (first_name);
 CREATE INDEX IX_user_second_name   ON user_table (second_name);
 CREATE INDEX IX_user_middle_name   ON user_table (middle_name);
-CREATE INDEX IX_user_position   ON user_table (`position`);
+CREATE INDEX IX_user_post   ON user_table (post);
 
 
 CREATE TABLE IF NOT EXISTS user_document (
       id          INTEGER PRIMARY KEY AUTO_INCREMENT,
-      version    INTEGER NOT NULL     COMMENT 'Служебное поле hibernate',
+      version     INTEGER NOT NULL     COMMENT 'Служебное поле hibernate',
       doc_number  VARCHAR(50),
       doc_code    INTEGER,
       doc_date    DATE,
-      user_id     INTEGER,
       FOREIGN KEY (doc_code) REFERENCES doc_dictionary (code),
-      FOREIGN KEY (user_id)  REFERENCES user_table (id)
+      FOREIGN KEY (id)  REFERENCES user_table (id)
 );
 
-CREATE INDEX UX_user_document_user_id ON user_document (user_id);
+CREATE INDEX UX_user_document_user_id ON user_document (id);
 
 
 
