@@ -7,5 +7,4 @@ import ru.bellintegrator.practice.project.model.CountryDictionary;
 @Repository
 public interface CountryRepository extends JpaRepository<CountryDictionary, Integer> {
 
-
 }
