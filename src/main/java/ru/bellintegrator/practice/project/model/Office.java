@@ -1,6 +1,8 @@
 package ru.bellintegrator.practice.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQuery(name = "Office.findById",
+        query = "SELECT * FROM Office WHERE id = ?1",
+        resultClass = Office.class)
 public class Office {
 
     @Id
@@ -58,12 +63,14 @@ public class Office {
     /**
      * Поле для связи с сотрудниками
      */
+    @JsonBackReference
     @OneToMany(mappedBy = "office")
     public List<UserTable> userTableList;
 
     /**
      * Поле для связи с организациями
      */
+    @JsonManagedReference
     @ManyToOne
     public Organization organization;
 

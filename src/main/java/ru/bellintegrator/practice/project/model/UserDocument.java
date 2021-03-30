@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,9 @@ import java.util.Calendar;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQuery(name = "UserDocument.findById",
+        query = "SELECT * FROM user_document WHERE id = ?1",
+        resultClass = UserDocument.class)
 public class UserDocument {
 
     @Id
@@ -51,6 +55,7 @@ public class UserDocument {
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id")
+    @JsonManagedReference
     public UserTable userTable;
 
     /**
@@ -58,6 +63,7 @@ public class UserDocument {
      */
     @ManyToOne
     @JoinColumn(name = "doc_code")
+    @JsonManagedReference
     public DocDictionary docDictionary;
 
 }

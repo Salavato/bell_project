@@ -6,4 +6,5 @@ import ru.bellintegrator.practice.project.model.Organization;
 public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
 
 
+
 }

@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,9 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQuery(name = "UserTable.findById",
+        query = "SELECT * FROM user_table WHERE id = ?1",
+        resultClass = UserTable.class)
 public class UserTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +76,7 @@ public class UserTable {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "office_id")
+    @JsonManagedReference
     public Office office;
 
     /**
@@ -79,6 +84,7 @@ public class UserTable {
      */
     @ManyToOne
     @JoinColumn(name = "citizenship_code")
+    @JsonManagedReference
     public CountryDictionary countryDictionary;
 
     /**

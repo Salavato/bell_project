@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,13 +20,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQuery(name = "DocDictionary.findById",
+        query = "SELECT * FROM doc_dictionary WHERE code = ?1",
+        resultClass = DocDictionary.class)
 public class DocDictionary {
 
     /**
      * Код документа
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer code;
 
     /**
@@ -38,6 +41,7 @@ public class DocDictionary {
     /**
      * Поле для связи с документами
      */
+    @JsonBackReference
     @OneToMany(mappedBy = "docDictionary")
     private List<UserDocument> userDocumentList;
 }

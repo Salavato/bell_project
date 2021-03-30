@@ -16,13 +16,13 @@ INSERT INTO doc_dictionary (code, name) VALUES (07, 'Военный билет')
 
 INSERT INTO country_dictionary (code, name) VALUES (643, 'Российская Федерация');
 
-INSERT INTO user_table (office_id, version, first_name, second_name, middle_name, post, phone, is_identified)
-VALUES (1,1, 'Иван', 'Иванов', 'Петрович', 'менеджер', 150-76, true);
+INSERT INTO user_table (office_id, version, first_name, second_name, middle_name, post, phone, citizenship_code, is_identified)
+VALUES (1,1, 'Иван', 'Иванов', 'Петрович', 'менеджер', 150-76, 643, true);
 
 INSERT INTO user_table (office_id, version, first_name, second_name, middle_name, post, phone, is_identified)
 VALUES (2,3, 'Андрей', 'Васильев', 'Олегович', 'Директор', 150-95, true);
 
--- INSERT INTO USER_DOCUMENT (version, doc_number, doc_code, doc_date)
---             VALUES (10,'101',1,'20-01-2001');
+INSERT INTO USER_DOCUMENT (version, doc_number, doc_code)
+VALUES (1,'101/23-77Д',03);
 
 

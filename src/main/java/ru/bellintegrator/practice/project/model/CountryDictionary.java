@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,13 +20,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQuery(name = "CountryDictionary.findById",
+        query = "SELECT * FROM country_dictionary WHERE code = ?1",
+        resultClass = CountryDictionary.class)
 public class CountryDictionary {
 
     /**
      * Код гражданства
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer code;
 
     /**
@@ -38,5 +41,6 @@ public class CountryDictionary {
      * Поле для связи с сотрудниками
      */
     @OneToMany(mappedBy = "countryDictionary")
+    @JsonBackReference
     private List<UserTable> userTableList;
 }

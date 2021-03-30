@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.project.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.project.model.*;
 import ru.bellintegrator.practice.project.repository.*;
@@ -46,10 +47,13 @@ public class TestController {
     public void addUserDoc() {
 
         UserTable byId = userReposutory.findById(1).get();
+        DocDictionary udById = docRepository.findById(03).get();
+
 
         UserDocument userDocument = new UserDocument();
         userDocument.setUserTable(byId);
         userDocument.setDoc_number("E348$");
+        userDocument.setDocDictionary(udById);
         userDocument.setDoc_date(new GregorianCalendar(2008,04,26));
 
         userDocRepository.save(userDocument);
@@ -91,6 +95,18 @@ public class TestController {
         user1.setOffice(officebyId);
 
         userReposutory.save(user1);
+    }
+
+    @GetMapping("/test")
+    public Organization testStr() {
+        Organization organization = new Organization();
+        organization.setFullName("ООО Промимпорт");
+        organization.setName("Промимпорт");
+        organization.setInn("4418054567");
+        organization.setKpp("441801001");
+        organization.setAddress("г. Москва, Оружейный переулок, 41");
+
+        return organization;
     }
 
 }
