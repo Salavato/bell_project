@@ -2,7 +2,6 @@ package ru.bellintegrator.practice.project.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.project.model.*;
 import ru.bellintegrator.practice.project.repository.*;
@@ -46,17 +45,17 @@ public class TestController {
     @GetMapping("/adduserdoc")
     public void addUserDoc() {
 
-        UserTable byId = userReposutory.findById(1).get();
-        DocDictionary udById = docRepository.findById(03).get();
-
-
-        UserDocument userDocument = new UserDocument();
-        userDocument.setUserTable(byId);
-        userDocument.setDoc_number("E348$");
-        userDocument.setDocDictionary(udById);
-        userDocument.setDoc_date(new GregorianCalendar(2008,04,26));
-
-        userDocRepository.save(userDocument);
+//        User byId = userReposutory.findById(1).get();
+//        DocDictionary udById = docRepository.findById(03).get();
+//
+//
+//        UserDocument userDocument = new UserDocument();
+//        userDocument.setUser(byId);
+//        userDocument.setDoc_number("E348$");
+//        userDocument.setDocDictionary(udById);
+//        userDocument.setDoc_date(new GregorianCalendar(2008,04,26));
+//
+//        userDocRepository.save(userDocument);
     }
 
     @GetMapping("/addorg")
@@ -73,15 +72,15 @@ public class TestController {
 
     @GetMapping("/addoffice")
     public void addOffice() {
-        Organization byId = organizationRepository.findById(1).get();
-
-        Office office = new Office();
-        office.setName("office 1");
-        office.setAddress("London");
-        office.setIsActive(true);
-        office.setOrganization(byId);
-
-        officeRepository.save(office);
+//        Organization byId = organizationRepository.findById(1).get();
+//
+//        Office office = new Office();
+//        office.setName("office 1");
+//        office.setAddress("London");
+//        office.setIsActive(true);
+//        office.setOrganization(byId);
+//
+//        officeRepository.save(office);
     }
 
 
@@ -89,9 +88,9 @@ public class TestController {
     public void addUser() {
         Office officebyId = officeRepository.findById(1).get();
 
-        UserTable user1 = new UserTable();
-        user1.setFirst_name("Иван");
-        user1.setPost("менеджер");
+        User user1 = new User();
+    //    user1.setFirst_name("Иван");
+     //   user1.setPost("менеджер");
         user1.setOffice(officebyId);
 
         userReposutory.save(user1);

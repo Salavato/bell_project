@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS organization (
     id         INTEGER      PRIMARY KEY AUTO_INCREMENT ,
     version    INTEGER      NOT NULL,
-    full_name  VARCHAR(100) NOT NULL,
-    name       VARCHAR(50)  NOT NULL,
-    inn        VARCHAR(50)  NOT NULL,
-    kpp        VARCHAR(10)  NOT NULL,
-    address    VARCHAR(100) NOT NULL,
-    phone      VARCHAR(20),
+    full_name  VARCHAR(300) NOT NULL,
+    name       VARCHAR(200)  NOT NULL,
+    inn        VARCHAR(100)  NOT NULL,
+    kpp        VARCHAR(100)  NOT NULL,
+    address    VARCHAR(300) NOT NULL,
+    phone      VARCHAR(100),
     is_active  BOOLEAN
 );
 
@@ -18,10 +18,10 @@ CREATE TABLE IF NOT EXISTS office (
     id         INTEGER              PRIMARY KEY AUTO_INCREMENT,
     organization_id INTEGER         NOT NULL,
     version    INTEGER              NOT NULL,
-    name       VARCHAR(100)         NOT NULL,
-    address    VARCHAR(100)         NOT NULL,
-    phone      VARCHAR(20),
-    is_active  BOOLEAN             NOT NULL,
+    name       VARCHAR(200)         NOT NULL,
+    address    VARCHAR(200)         NOT NULL,
+    phone      VARCHAR(100),
+    is_active  BOOLEAN,
     FOREIGN KEY (organization_id) REFERENCES organization (id)
 );
 
@@ -32,23 +32,23 @@ CREATE INDEX IX_office_is_active ON office (is_active);
 
 CREATE TABLE IF NOT EXISTS doc_dictionary (
   code  INTEGER PRIMARY KEY,
-  name  VARCHAR(50)
+  name  VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS country_dictionary (
   code  INTEGER PRIMARY KEY,
-  name  VARCHAR(50)
+  name  VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS user_table (
     id          INTEGER              PRIMARY KEY AUTO_INCREMENT,
     office_id   INTEGER              NOT NULL,
     version     INTEGER              NOT NULL,
-    first_name  VARCHAR(100)         NOT NULL,
-    second_name VARCHAR(100),
-    middle_name VARCHAR(100),
-    post        VARCHAR(50)          NOT NULL,
-    phone       VARCHAR(20),
+    first_name  VARCHAR(200)         NOT NULL,
+    second_name VARCHAR(200),
+    middle_name VARCHAR(200),
+    position    VARCHAR(100)          NOT NULL,
+    phone       VARCHAR(100),
     citizenship_code INTEGER,
     is_identified BOOLEAN,
     FOREIGN KEY (citizenship_code)   REFERENCES country_dictionary (code),
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS user_table (
 CREATE INDEX IX_user_first_name ON user_table (first_name);
 CREATE INDEX IX_user_second_name   ON user_table (second_name);
 CREATE INDEX IX_user_middle_name   ON user_table (middle_name);
-CREATE INDEX IX_user_post   ON user_table (post);
+CREATE INDEX IX_user_post   ON user_table (position);
 
 
 CREATE TABLE IF NOT EXISTS user_document (
       id          INTEGER PRIMARY KEY AUTO_INCREMENT,
       version     INTEGER NOT NULL,
-      doc_number  VARCHAR(50),
+      doc_number  VARCHAR(100),
       doc_code    INTEGER,
       doc_date    DATE,
       FOREIGN KEY (doc_code) REFERENCES doc_dictionary (code),

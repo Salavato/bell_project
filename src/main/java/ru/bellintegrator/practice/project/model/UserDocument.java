@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,18 @@ import java.util.Calendar;
         resultClass = UserDocument.class)
 public class UserDocument {
 
+    @Override
+    public String toString() {
+        return "UserDocument{" +
+                "id=" + id +
+                ", version=" + version +
+                ", docNumber='" + docNumber + '\'' +
+                '}';
+    }
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Integer id;
 
     /**
@@ -36,18 +47,23 @@ public class UserDocument {
     @Version
     public Integer version;
 
+
     /**
      * Номер документа
      */
-    @Column
-    @Size(max = 50)
-    public String doc_number;
+    @Column(name = "doc_number")
+    @Size(max = 200)
+    public String docNumber;
+
 
     /**
      * Дата документа
      */
+    @Column(name = "doc_date")
     @Temporal(TemporalType.DATE)
-    public Calendar doc_date;
+    public Calendar docDate;
+
+
 
     /**
      * Поле для связи с сотрудниками
@@ -55,8 +71,9 @@ public class UserDocument {
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id")
-    @JsonManagedReference
-    public UserTable userTable;
+    @JsonBackReference
+    public User user;
+
 
     /**
      * Поле для связи со справочником документов

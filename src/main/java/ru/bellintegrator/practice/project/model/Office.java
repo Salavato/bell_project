@@ -3,7 +3,6 @@ package ru.bellintegrator.practice.project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,7 +34,6 @@ public class Office {
     /**
      * Служебное поле hibernate
      */
-    @Column(nullable = false)
     @Version
     public Integer version;
 
@@ -61,13 +59,6 @@ public class Office {
     public String phone;
 
     /**
-     * Поле для связи с сотрудниками
-     */
-    @JsonBackReference
-    @OneToMany(mappedBy = "office")
-    public List<UserTable> userTableList;
-
-    /**
      * Поле для связи с организациями
      */
     @JsonManagedReference
@@ -77,14 +68,8 @@ public class Office {
     /**
      * Актина или нет
      */
-    @NotNull
+    @Column(nullable = true)
     public Boolean isActive;
-
-
-
-
-
-
 
 }
 

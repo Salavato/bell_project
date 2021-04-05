@@ -7,4 +7,6 @@ import ru.bellintegrator.practice.project.model.DocDictionary;
 @Repository
 public interface DocRepository extends JpaRepository<DocDictionary, Integer> {
 
+    DocDictionary findDocDictionaryByCode(Integer code);
+
 }

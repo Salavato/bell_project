@@ -1,50 +1,36 @@
 package ru.bellintegrator.practice.project.view;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
+@ApiModel(description = "Организация")
 public class OrganizationView {
 
-    /**
-     * Полное имя компании
-     */
+    @ApiModelProperty(value = "Полное наименование компании", example = "ООО Промимпорт")
     private String fullName;
 
-    /**
-     * Сокращенное имя компании
-     */
+    @ApiModelProperty(value = "Сокращенное наименование компании", example = "Промимпорт")
     private String name;
 
-    /**
-     * Инн компании
-     */
+    @ApiModelProperty(value = "ИНН компании", example = "7705902106")
     private String inn;
 
-    /**
-     * Кпп компании
-     */
+    @ApiModelProperty(value = "КПП компании", example = "770501001")
     private String kpp;
 
-    /**
-     * Адрес организации
-     */
+    @ApiModelProperty(value = "Адресс компании", example = "г. Москва, набережная Овчинниковская, д. 20")
     private String address;
 
-    /**
-     * Городской телефон компании
-     */
+    @ApiModelProperty(value = "Телефон компании", example = "254-11-77")
     private String phone;
 
-
-    /**
-     * Поле для понимания ведет компания деятельность или нет
-     */
-    private Boolean is_active;
-
-
-
+    @ApiModelProperty(value = "Ведет компания деятельность или нет", example = "true")
+    private Boolean isActive = true;
 
 
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -86,14 +87,7 @@ public class Organization {
     /**
      * Поле для понимания ведет компания деятельность или нет
      */
-    @Column
-    private Boolean is_active;
-
-    /**
-     * Поле для связи с Офисами
-     */
-    @JsonBackReference
-    @OneToMany(mappedBy = "organization")
-    private List<Office> offices = new ArrayList<>();
+    @Column(nullable = false)
+    private Boolean isActive;
 
 }

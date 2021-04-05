@@ -29,6 +29,8 @@ public class DocDictionary {
      * Код документа
      */
     @Id
+    @Column(name = "code")
+ //   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer code;
 
     /**
@@ -38,10 +40,4 @@ public class DocDictionary {
     @Size(max = 50)
     private String name;
 
-    /**
-     * Поле для связи с документами
-     */
-    @JsonBackReference
-    @OneToMany(mappedBy = "docDictionary")
-    private List<UserDocument> userDocumentList;
 }

@@ -22,8 +22,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @NamedNativeQuery(name = "UserTable.findById",
         query = "SELECT * FROM user_table WHERE id = ?1",
-        resultClass = UserTable.class)
-public class UserTable {
+        resultClass = User.class)
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
@@ -38,30 +38,30 @@ public class UserTable {
     /**
      * Имя сотрудника
      */
-    @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     @Size(max = 100)
-    public String first_name;
+    public String firstName;
 
     /**
      * Фамилия сотрудника
      */
-    @Column(nullable = false)
+    @Column(name = "second_name")
     @Size(max = 100)
-    public String second_name;
+    public String secondName;
 
     /**
      * Отчество сотрудника
      */
-    @Column
     @Size(max = 100)
-    public String middle_name;
+    @Column(name = "middle_name")
+    public String middleName;
 
     /**
      * Должность сотрудника
      */
     @Column(nullable = false)
     @Size(max = 100)
-    public String post;
+    public String position;
 
     /**
      * Телефон сотрудника
@@ -82,6 +82,14 @@ public class UserTable {
     /**
      * Поле для связи со справочником документов
      */
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @JoinColumn(name = "id")
+    @JsonManagedReference
+    public UserDocument userDocument;
+
+    /**
+     * Поле для связи со справочником гражданств
+     */
     @ManyToOne
     @JoinColumn(name = "citizenship_code")
     @JsonManagedReference
@@ -90,6 +98,7 @@ public class UserTable {
     /**
      * Действующий сотрудник или нет
      */
-    public Boolean is_identified;
+    @Column(name = "is_identified", nullable = true)
+    public Boolean isIdentified;
 
 }

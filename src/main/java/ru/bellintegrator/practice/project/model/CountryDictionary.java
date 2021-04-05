@@ -37,10 +37,4 @@ public class CountryDictionary {
     @Size(max = 50)
     private String name;
 
-    /**
-     * Поле для связи с сотрудниками
-     */
-    @OneToMany(mappedBy = "countryDictionary")
-    @JsonBackReference
-    private List<UserTable> userTableList;
 }
