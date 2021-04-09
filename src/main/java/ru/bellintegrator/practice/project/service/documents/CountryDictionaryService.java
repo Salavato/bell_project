@@ -2,11 +2,10 @@ package ru.bellintegrator.practice.project.service.documents;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.project.model.CountryDictionary;
-import ru.bellintegrator.practice.project.model.Office;
-import ru.bellintegrator.practice.project.view.CountryDictionaryView;
-import ru.bellintegrator.practice.project.view.OfficeView;
+import ru.bellintegrator.practice.project.view.documents.CountryDictionaryView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Сервис для гражданств
@@ -19,14 +18,14 @@ public interface CountryDictionaryService {
      *
      * @return {@CountryDictionary}
      */
-    CountryDictionary findCountry(Integer code);
+    List<CountryDictionaryView> allCountry();
+
 
     /**
      * Добавить новое гражданство
      *
      * @param countryView
      */
-    void saveCountry(@Valid CountryDictionaryView countryView);
-
+    void add(@Valid CountryDictionaryView countryView);
 
 }

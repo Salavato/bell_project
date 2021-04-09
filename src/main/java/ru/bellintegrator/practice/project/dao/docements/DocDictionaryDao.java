@@ -1,7 +1,8 @@
 package ru.bellintegrator.practice.project.dao.docements;
 
-import ru.bellintegrator.practice.project.model.CountryDictionary;
 import ru.bellintegrator.practice.project.model.DocDictionary;
+
+import java.util.List;
 
 /**
  * Data Access Object для работы с DocDictionary
@@ -9,19 +10,16 @@ import ru.bellintegrator.practice.project.model.DocDictionary;
 public interface DocDictionaryDao {
 
     /**
-     * Получить DocDictionary по идентификатору
+     * Получить все объекты DocDictionary
      *
-     * @param code
      * @return
      */
-    DocDictionary findDocById(Integer code);
-
+    List<DocDictionary> allDoc();
 
     /**
      * Сохранить DocDictionary
      *
      * @param docDictionary
      */
-    void saveDoc(DocDictionary docDictionary);
-    
+    void save(DocDictionary docDictionary);
 }

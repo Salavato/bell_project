@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.project.model.DocDictionary;
 import ru.bellintegrator.practice.project.repository.DocRepository;
 import ru.bellintegrator.practice.project.service.documents.DocDictionaryService;
-import ru.bellintegrator.practice.project.view.DocDictionaryView;
+import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import java.util.List;
 
@@ -18,27 +18,23 @@ import java.util.List;
 @Api(value = "DocDictionaryController", description = "Управление информацией о справочнике документах")
 public class DocDictionaryController {
 
-    private final DocRepository docRepository;
     private final DocDictionaryService docDictionaryService;
 
     @Autowired
-    public DocDictionaryController(DocRepository docRepository, DocDictionaryService docDictionaryService) {
-        this.docRepository = docRepository;
+    public DocDictionaryController(DocDictionaryService docDictionaryService) {
         this.docDictionaryService = docDictionaryService;
     }
 
     @ApiOperation(value = "Получить список справочника", httpMethod = "GET")
     @GetMapping("/api/docs")
-    public List<DocDictionary> docListGet() {
-        return docRepository.findAll();
+    public List<DocDictionaryView> docListGet() {
+        return docDictionaryService.all();
     }
-
 
     @ApiOperation(value = "Добавить новый справочник документа", httpMethod = "POST")
     @PostMapping("api/docs/save")
     public String docPost(@RequestBody DocDictionaryView view) {
-        docDictionaryService.saveDoc(view);
+        docDictionaryService.save(view);
         return "success";
     }
-
 }

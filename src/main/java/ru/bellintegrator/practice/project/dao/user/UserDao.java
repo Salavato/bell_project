@@ -1,6 +1,11 @@
 package ru.bellintegrator.practice.project.dao.user;
 
+import ru.bellintegrator.practice.project.model.Office;
 import ru.bellintegrator.practice.project.model.User;
+import ru.bellintegrator.practice.project.view.office.FindOfficeView;
+import ru.bellintegrator.practice.project.view.user.FindUserView;
+
+import java.util.List;
 
 /**
  * Data Access Object для работы с User
@@ -8,7 +13,7 @@ import ru.bellintegrator.practice.project.model.User;
 public interface UserDao {
 
     /**
-     * Получить UserTable по идентификатору
+     * Получить User по идентификатору
      *
      * @param id
      * @return
@@ -16,12 +21,21 @@ public interface UserDao {
     User findUserById(Integer id);
 
     /**
-     * Сохранить UserTable
+     * Сохранить User
      *
-     * @param office
+     * @param user
      */
-    void saveUser(User office);
+    void saveUser(User user);
 
+    /**
+     * Обновить User
+     * @param user
+     */
+    void update(User user);
 
-
+    /**
+     * Поиск User по фильтру
+     * @param view
+     */
+    User filter(FindUserView view);
 }

@@ -2,9 +2,13 @@ package ru.bellintegrator.practice.project.dao.docements;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.practice.project.model.CountryDictionary;
 import ru.bellintegrator.practice.project.model.DocDictionary;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.print.Doc;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -23,15 +27,17 @@ public class DocDictionaryDaoImpl implements DocDictionaryDao {
      * {@inheritDoc}
      */
     @Override
-    public DocDictionary findDocById(Integer code) {
-        return em.find(DocDictionary.class, code);
+    public List<DocDictionary> allDoc() {
+        TypedQuery<DocDictionary> query =
+                em.createQuery("SELECT d FROM DocDictionary d", DocDictionary.class);
+        return query.getResultList();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void saveDoc(DocDictionary docDictionary) {
+    public void save(DocDictionary docDictionary) {
         em.persist(docDictionary);
     }
 }

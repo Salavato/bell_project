@@ -1,13 +1,11 @@
 package ru.bellintegrator.practice.project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 /**
  * Класс служит для хранения гражданств
@@ -36,5 +34,4 @@ public class CountryDictionary {
      */
     @Size(max = 50)
     private String name;
-
 }

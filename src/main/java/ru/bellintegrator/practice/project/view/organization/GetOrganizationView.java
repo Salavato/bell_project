@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.project.view;
+package ru.bellintegrator.practice.project.view.organization;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,14 +8,17 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@ApiModel(description = "Организация")
-public class OrganizationView {
+@ApiModel(description = "View для вызова организации")
+public class GetOrganizationView {
 
-    @ApiModelProperty(value = "Полное наименование компании", example = "ООО Промимпорт")
-    private String fullName;
+    @ApiModelProperty(value = "Идентификатор", example = "1")
+    private Integer id;
 
     @ApiModelProperty(value = "Сокращенное наименование компании", example = "Промимпорт")
     private String name;
+
+    @ApiModelProperty(value = "Полное наименование компании", example = "ООО Промимпорт")
+    private String fullName;
 
     @ApiModelProperty(value = "ИНН компании", example = "7705902106")
     private String inn;
@@ -31,6 +34,4 @@ public class OrganizationView {
 
     @ApiModelProperty(value = "Ведет компания деятельность или нет", example = "true")
     private Boolean isActive = true;
-
-
 }

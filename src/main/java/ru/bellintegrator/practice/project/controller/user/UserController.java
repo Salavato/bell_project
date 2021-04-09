@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.model.User;
 import ru.bellintegrator.practice.project.service.user.UserServiceImpl;
-import ru.bellintegrator.practice.project.view.UserView;
+import ru.bellintegrator.practice.project.view.office.FindOfficeView;
+import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
+import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
+import ru.bellintegrator.practice.project.view.user.*;
 
+import java.util.List;
 
 
 @RestController
@@ -23,15 +27,28 @@ public class UserController {
 
     @GetMapping("/api/user/{id}")
     @ApiOperation(value = "Получить сотрудника по идентификатору", httpMethod = "GET")
-    public User userGet(@PathVariable(name = "id") Integer id) {
+    public GetUserView userGet(@PathVariable(name = "id") Integer id) {
         return userService.findUser(id);
     }
 
     @ApiOperation(value = "Добавить нового сотрудника", httpMethod = "POST")
     @PostMapping("api/user/save")
-    public String organizationPost(@RequestBody UserView user) {
+    public String organizationPost(@RequestBody SaveUserView user) {
         userService.saveUser(user);
         return "success";
+    }
+
+    @ApiOperation(value = "Обновить сотрудника", httpMethod = "POST")
+    @PostMapping("api/user/update")
+    public String userUpdate(@RequestBody UpdateUserView view) {
+        userService.update(view);
+        return "success";
+    }
+
+    @ApiOperation(value = "Поиск сотрудника по фильтру", httpMethod = "POST")
+    @PostMapping("api/user/list")
+    public GetListUserView officeFind(@RequestBody FindUserView findUserView) {
+        return userService.findBy(findUserView);
     }
 
 }

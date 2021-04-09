@@ -26,44 +26,30 @@ import java.util.Calendar;
         resultClass = UserDocument.class)
 public class UserDocument {
 
-    @Override
-    public String toString() {
-        return "UserDocument{" +
-                "id=" + id +
-                ", version=" + version +
-                ", docNumber='" + docNumber + '\'' +
-                '}';
-    }
-
-
     @Id
     @Column(name = "id")
-    public Integer id;
+    private Integer id;
 
     /**
      * Служебное поле hibernate
      */
     @Column(nullable = false)
     @Version
-    public Integer version;
-
+    private Integer version;
 
     /**
      * Номер документа
      */
     @Column(name = "doc_number")
     @Size(max = 200)
-    public String docNumber;
-
+    private String docNumber;
 
     /**
      * Дата документа
      */
     @Column(name = "doc_date")
     @Temporal(TemporalType.DATE)
-    public Calendar docDate;
-
-
+    private Calendar docDate;
 
     /**
      * Поле для связи с сотрудниками
@@ -71,16 +57,13 @@ public class UserDocument {
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id")
-    @JsonBackReference
-    public User user;
-
+    private User user;
 
     /**
      * Поле для связи со справочником документов
      */
     @ManyToOne
     @JoinColumn(name = "doc_code")
-    @JsonManagedReference
-    public DocDictionary docDictionary;
+    private DocDictionary docDictionary;
 
 }

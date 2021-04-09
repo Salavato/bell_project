@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.project.view;
+package ru.bellintegrator.practice.project.view.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Size;
-import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
-@ApiModel(description = "Сотрудники")
-public class UserView {
+@ApiModel(description = "View для поиска сотрудника по фильтру")
+public class FindUserView {
 
     @ApiModelProperty(value = "Поле для идентификатора офиса", example = "1")
     public Integer officeId;
@@ -35,26 +34,9 @@ public class UserView {
     @Size(max = 100)
     public String position;
 
-    @ApiModelProperty(value = "Телефон сотрудника", example = "150-45")
-    @Size(max = 100)
-    public String phone;
-
     @ApiModelProperty(value = "Поле для идентификатора справочника документа сотрудника", example = "3")
     public Integer docCode;
 
-    @ApiModelProperty(value = "Название документа сотрудника", example = "Военный билет")
-    public String docName;
-
-    @ApiModelProperty(value = "Номер документа сотрудника", example = "4п1-У26")
-    public String docNumber;
-
-    @ApiModelProperty(value = "Дата документа сотрудника", example = "2008/04/06")
-    public Calendar docDate;
-
     @ApiModelProperty(value = "Поле для идентификатора гражданства", example = "643")
     public Integer citizenshipCode;
-
-    @ApiModelProperty(value = "Поле которое показывает работает сотрудник или нет", example = "true")
-    public Boolean isIdentified = true;
-
 }

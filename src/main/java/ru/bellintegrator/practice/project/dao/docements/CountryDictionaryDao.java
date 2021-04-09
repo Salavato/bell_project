@@ -1,7 +1,8 @@
 package ru.bellintegrator.practice.project.dao.docements;
 
 import ru.bellintegrator.practice.project.model.CountryDictionary;
-import ru.bellintegrator.practice.project.model.Office;
+
+import java.util.List;
 
 /**
  * Data Access Object для работы с CountryDictionary
@@ -9,18 +10,16 @@ import ru.bellintegrator.practice.project.model.Office;
 public interface CountryDictionaryDao {
 
     /**
-     * Получить CountryDictionary по идентификатору
+     * Получить все объекты CountryDictionary
      *
-     * @param code
      * @return
      */
-    CountryDictionary findCountryById(Integer code);
-
+    List<CountryDictionary> allCountry();
 
     /**
      * Сохранить CountryDictionary
      *
      * @param countryDictionary
      */
-    void saveCountry(CountryDictionary countryDictionary);
+    void save(CountryDictionary countryDictionary);
 }

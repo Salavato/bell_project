@@ -1,15 +1,12 @@
 package ru.bellintegrator.practice.project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 /**
  * Класс служит для хранения офисов
@@ -29,47 +26,45 @@ public class Office {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     /**
      * Служебное поле hibernate
      */
     @Version
-    public Integer version;
+    private Integer version;
 
     /**
      * Название офиса
      */
     @Column(nullable = false)
     @Size(max = 100)
-    public String name;
+    private String name;
 
     /**
      * Адрес офиса
      */
     @Column(nullable = false)
     @Size(max = 100)
-    public String address;
+    private String address;
 
     /**
      * Городской телефон офиса
      */
     @Column
     @Size(max = 20)
-    public String phone;
+    private String phone;
 
     /**
      * Поле для связи с организациями
      */
-    @JsonManagedReference
-    @ManyToOne
-    public Organization organization;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Organization organization;
 
     /**
      * Актина или нет
      */
     @Column(nullable = true)
-    public Boolean isActive;
-
+    private Boolean isActive;
 }
 

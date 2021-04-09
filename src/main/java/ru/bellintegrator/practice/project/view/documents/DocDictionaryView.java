@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.project.view;
+package ru.bellintegrator.practice.project.view.documents;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@ApiModel(description = "Cправочника документа сотрудника")
+@ApiModel(description = "View для справочника документов")
 public class DocDictionaryView {
 
     @ApiModelProperty(value = "Идентификатор документа сотрудника", example = "3")
@@ -15,5 +15,4 @@ public class DocDictionaryView {
 
     @ApiModelProperty(value = "Наименование документа сотрудника", example = "Военный билет")
     private String name;
-
 }

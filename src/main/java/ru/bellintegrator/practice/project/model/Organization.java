@@ -1,17 +1,11 @@
 package ru.bellintegrator.practice.project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Класс служит для хранения организации
@@ -83,11 +77,9 @@ public class Organization {
     @Size(max = 20)
     private String phone;
 
-
     /**
      * Поле для понимания ведет компания деятельность или нет
      */
     @Column(nullable = false)
     private Boolean isActive;
-
 }

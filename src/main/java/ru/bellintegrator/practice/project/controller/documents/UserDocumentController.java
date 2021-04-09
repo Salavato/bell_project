@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.model.UserDocument;
 import ru.bellintegrator.practice.project.service.documents.UserDocumentServiceImpl;
-import ru.bellintegrator.practice.project.view.UserDocumentView;
+import ru.bellintegrator.practice.project.view.documents.UserDocumentView;
+
+import java.util.List;
 
 @RestController
 @Api(value = "UserDocumentController", description = "Управление информацией о документах сотрудников")
@@ -19,19 +21,17 @@ public class UserDocumentController {
         this.userDocumentService = userDocumentService;
     }
 
-    @ApiOperation(value = "Получить документ сотрудника по идентификатору", httpMethod = "GET")
-    @GetMapping("/api/userdoc/{id}")
-    public UserDocument userDocGet(@PathVariable(name = "id") Integer id) {
-        return userDocumentService.findUserDocument(id);
+    @ApiOperation(value = "Получить полный список документов сотрудников", httpMethod = "GET")
+    @GetMapping("/api/userdoc")
+    public List<UserDocumentView> userDocGet() {
+        return userDocumentService.allUserDocument();
 
     }
 
-    @ApiOperation(value = "Обновить документ сотрудника", httpMethod = "UPDATE")
+    @ApiOperation(value = "Обновить документ сотрудника", httpMethod = "POST")
     @PostMapping("api/userdoc/update")
-    public String organizationPost(@RequestBody UserDocumentView view) {
+    public String updateUserDoc(@RequestBody UserDocumentView view) {
         userDocumentService.updateUserDocument(view);
         return "success";
     }
-
-
 }

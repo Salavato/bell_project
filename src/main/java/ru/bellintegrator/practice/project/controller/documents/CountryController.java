@@ -4,10 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.bellintegrator.practice.project.model.CountryDictionary;
-import ru.bellintegrator.practice.project.repository.CountryRepository;
 import ru.bellintegrator.practice.project.service.documents.CountryDictionaryServiceImpl;
-import ru.bellintegrator.practice.project.view.CountryDictionaryView;
+import ru.bellintegrator.practice.project.view.documents.CountryDictionaryView;
 
 import java.util.List;
 
@@ -16,24 +14,22 @@ import java.util.List;
 public class CountryController {
 
     private final CountryDictionaryServiceImpl countryDictionaryService;
-    private final CountryRepository countryRepository;
 
     @Autowired
-    public CountryController(CountryDictionaryServiceImpl countryDictionaryService, CountryRepository countryRepository) {
+    public CountryController(CountryDictionaryServiceImpl countryDictionaryService) {
         this.countryDictionaryService = countryDictionaryService;
-        this.countryRepository = countryRepository;
     }
 
     @GetMapping("/api/country")
     @ApiOperation(value = "Получить список гражданств", httpMethod = "GET")
-    public List<CountryDictionary> countryListGet() {
-        return countryRepository.findAll();
+    public List<CountryDictionaryView> countryListGet() {
+        return countryDictionaryService.allCountry();
     }
 
     @ApiOperation(value = "Добавить новое гражданство", httpMethod = "POST")
     @PostMapping("api/country/save")
     public String organizationPost(@RequestBody CountryDictionaryView view) {
-        countryDictionaryService.saveCountry(view);
+        countryDictionaryService.add(view);
         return "success";
     }
 }

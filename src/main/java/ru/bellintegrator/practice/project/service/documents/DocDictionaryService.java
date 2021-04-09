@@ -2,9 +2,10 @@ package ru.bellintegrator.practice.project.service.documents;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.project.model.DocDictionary;
-import ru.bellintegrator.practice.project.view.DocDictionaryView;
+import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Сервис для справочников документов
@@ -17,13 +18,12 @@ public interface DocDictionaryService {
      *
      * @return {@DocDictionary}
      */
-    DocDictionary findDoc(Integer code);
+    List<DocDictionaryView> all();
 
     /**
      * Добавить новое документ справочника
      *
      * @param dictionaryView
      */
-    void saveDoc(@Valid DocDictionaryView dictionaryView);
-    
+    void save(@Valid DocDictionaryView dictionaryView);
 }

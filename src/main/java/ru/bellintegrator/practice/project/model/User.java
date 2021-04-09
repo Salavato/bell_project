@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
         query = "SELECT * FROM user_table WHERE id = ?1",
         resultClass = User.class)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
@@ -33,42 +34,42 @@ public class User {
      */
     @NotNull
     @Version
-    public Integer version;
+    private Integer version;
 
     /**
      * Имя сотрудника
      */
     @Column(name = "first_name", nullable = false)
     @Size(max = 100)
-    public String firstName;
+    private String firstName;
 
     /**
      * Фамилия сотрудника
      */
     @Column(name = "second_name")
     @Size(max = 100)
-    public String secondName;
+    private String secondName;
 
     /**
      * Отчество сотрудника
      */
     @Size(max = 100)
     @Column(name = "middle_name")
-    public String middleName;
+    private String middleName;
 
     /**
      * Должность сотрудника
      */
     @Column(nullable = false)
     @Size(max = 100)
-    public String position;
+    private String position;
 
     /**
      * Телефон сотрудника
      */
     @Column
     @Size(max = 20)
-    public String phone;
+    private String phone;
 
     /**
      * Поле для связи с офисом
@@ -76,29 +77,25 @@ public class User {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "office_id")
-    @JsonManagedReference
-    public Office office;
+    private Office office;
 
     /**
      * Поле для связи со справочником документов
      */
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @JoinColumn(name = "id")
-    @JsonManagedReference
-    public UserDocument userDocument;
+    private UserDocument userDocument;
 
     /**
      * Поле для связи со справочником гражданств
      */
     @ManyToOne
     @JoinColumn(name = "citizenship_code")
-    @JsonManagedReference
-    public CountryDictionary countryDictionary;
+    private CountryDictionary countryDictionary;
 
     /**
      * Действующий сотрудник или нет
      */
     @Column(name = "is_identified", nullable = true)
-    public Boolean isIdentified;
-
+    private Boolean isIdentified;
 }

@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.project.view;
+package ru.bellintegrator.practice.project.view.documents;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
-@ApiModel(description = "Документы сотрудника")
+@ApiModel(description = "View для документов сотрудника")
 public class UserDocumentView {
 
     @ApiModelProperty(value = "Идентификатор сотрудника", example = "1")
@@ -23,8 +23,4 @@ public class UserDocumentView {
 
     @ApiModelProperty(value = "Дата документа", example = "2010/02/02")
     Calendar docDate;
-
-
-
-
 }

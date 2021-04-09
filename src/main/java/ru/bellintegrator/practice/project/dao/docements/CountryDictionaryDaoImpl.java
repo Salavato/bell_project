@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.project.model.CountryDictionary;
 
 import javax.persistence.EntityManager;
-
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -24,16 +25,17 @@ public class CountryDictionaryDaoImpl implements CountryDictionaryDao {
      * {@inheritDoc}
      */
     @Override
-    public CountryDictionary findCountryById(Integer code) {
-
-        return em.find(CountryDictionary.class, code);
+    public List<CountryDictionary> allCountry() {
+        TypedQuery<CountryDictionary> query =
+                em.createQuery("SELECT c FROM CountryDictionary c", CountryDictionary.class);
+        return query.getResultList();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void saveCountry(CountryDictionary country) {
+    public void save(CountryDictionary country) {
         em.persist(country);
     }
 }
