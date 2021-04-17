@@ -5,13 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.organization.OrganizationDaoImpl;
+import ru.bellintegrator.practice.project.exception.OfficeNotFoundException;
+import ru.bellintegrator.practice.project.exception.OrganizationNotFoundException;
 import ru.bellintegrator.practice.project.model.Organization;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.SaveOrganizationView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,9 +38,13 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public GetOrganizationView findOrg(Integer id) {
+    public DataView findOrg(Integer id) {
         Organization organization = dao.findOrganizationById(id);
-        return mapperFacade.map(organization, GetOrganizationView.class);
+        if (organization == null) {
+            throw new OrganizationNotFoundException("Organization with id: " + id + " not found");
+        }
+        GetOrganizationView map = mapperFacade.map(organization, GetOrganizationView.class);
+        return new DataView(map);
     }
 
     /**
@@ -69,8 +77,10 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    public List<GetListOrganizationView> findBy(@Valid FindOrganizationView view) {
+    public DataView findBy(@Valid FindOrganizationView view) {
+
         List<Organization> list = dao.filter(view);
-        return mapperFacade.mapAsList(list, GetListOrganizationView.class);
+        List<GetListOrganizationView> map = mapperFacade.mapAsList(list, GetListOrganizationView.class);
+        return new DataView(map);
     }
 }

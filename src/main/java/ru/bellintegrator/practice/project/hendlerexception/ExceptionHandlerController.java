@@ -2,21 +2,34 @@ package ru.bellintegrator.practice.project.hendlerexception;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.bellintegrator.practice.project.exception.OfficeNotFoundException;
+import ru.bellintegrator.practice.project.exception.OrganizationNotFoundException;
 import ru.bellintegrator.practice.project.exception.UserNotFoundException;
-
-import java.util.HashMap;
-import java.util.Map;
+import ru.bellintegrator.practice.project.view.exception.ViewException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public Map<String, String> unhandledException(UserNotFoundException e) {
-        Map<String, String> mapError = new HashMap<>();
-        mapError.put("error", e.getMessage());
-        return mapError;
+    public ViewException userHandledException(UserNotFoundException e) {
+        ViewException viewException = new ViewException();
+        viewException.setMessage(e.getMessage());
+        return viewException;
     }
 
+    @ExceptionHandler(OfficeNotFoundException.class)
+    public ViewException officeHandledException(OfficeNotFoundException e) {
+        ViewException viewException = new ViewException();
+        viewException.setMessage(e.getMessage());
+        return viewException;
+    }
+
+    @ExceptionHandler(OrganizationNotFoundException.class)
+    public ViewException organizationHandledException(OrganizationNotFoundException e) {
+        ViewException viewException = new ViewException();
+        viewException.setMessage(e.getMessage());
+        return viewException;
+    }
 
 
 

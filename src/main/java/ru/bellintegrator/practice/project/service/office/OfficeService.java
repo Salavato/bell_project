@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.project.service.office;
 
 import org.springframework.validation.annotation.Validated;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.office.FindOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetOfficeView;
@@ -22,7 +23,7 @@ public interface OfficeService {
      *
      * @return {@Office}
      */
-    GetOfficeView findOffice(Integer id);
+    DataView findOffice(Integer id);
 
     /**
      * Добавить новый офис
@@ -43,5 +44,5 @@ public interface OfficeService {
      *
      * @param view
      */
-    List<GetListOfficeView> findBy(@Valid FindOfficeView view);
+    DataView findBy(@Valid FindOfficeView view);
 }

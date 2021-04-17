@@ -65,5 +65,4 @@ public class UserDocument {
     @ManyToOne
     @JoinColumn(name = "doc_code")
     private DocDictionary docDictionary;
-
 }

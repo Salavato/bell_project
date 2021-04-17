@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.project.service.user;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.project.model.User;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.office.GetOfficeView;
 import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
@@ -21,7 +22,7 @@ public interface UserService {
      *
      * @return {@UserTable}
      */
-    GetUserView findUser(Integer id);
+    DataView findUser(Integer id);
 
     /**
      * Добавить нового сотрудников
@@ -42,6 +43,6 @@ public interface UserService {
      *
      * @param view
      */
-    GetListUserView findBy(@Valid FindUserView view);
+    DataView findBy(@Valid FindUserView view);
 
 }

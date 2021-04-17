@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.project.service.organization;
 
 import org.springframework.validation.annotation.Validated;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
@@ -20,7 +21,7 @@ public interface OrganizationService {
      *
      * @return {@GetOrganizationView}
      */
-    GetOrganizationView findOrg(Integer id);
+    DataView findOrg(Integer id);
 
     /**
      * Добавить новую организацию
@@ -41,5 +42,5 @@ public interface OrganizationService {
      *
      * @param view
      */
-    List<GetListOrganizationView> findBy(@Valid FindOrganizationView view);
+    DataView findBy(@Valid FindOrganizationView view);
 }

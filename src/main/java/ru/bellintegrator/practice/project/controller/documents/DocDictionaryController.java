@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.project.model.DocDictionary;
 import ru.bellintegrator.practice.project.repository.DocRepository;
 import ru.bellintegrator.practice.project.service.documents.DocDictionaryService;
+import ru.bellintegrator.practice.project.view.DataView;
+import ru.bellintegrator.practice.project.view.ResultView;
 import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import java.util.List;
@@ -27,14 +29,14 @@ public class DocDictionaryController {
 
     @ApiOperation(value = "Получить список справочника", httpMethod = "GET")
     @GetMapping("/api/docs")
-    public List<DocDictionaryView> docListGet() {
+    public DataView docListGet() {
         return docDictionaryService.all();
     }
 
     @ApiOperation(value = "Добавить новый справочник документа", httpMethod = "POST")
     @PostMapping("api/docs/save")
-    public String docPost(@RequestBody DocDictionaryView view) {
+    public ResultView docPost(@RequestBody DocDictionaryView view) {
         docDictionaryService.save(view);
-        return "success";
+        return new ResultView();
     }
 }

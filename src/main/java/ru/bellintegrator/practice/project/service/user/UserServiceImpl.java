@@ -7,13 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.docements.UserDocumentDaoImpl;
 import ru.bellintegrator.practice.project.dao.office.OfficeDaoImpl;
 import ru.bellintegrator.practice.project.dao.user.UserDaoImpl;
+import ru.bellintegrator.practice.project.exception.OfficeNotFoundException;
 import ru.bellintegrator.practice.project.exception.UserNotFoundException;
 import ru.bellintegrator.practice.project.model.*;
 import ru.bellintegrator.practice.project.repository.CountryRepository;
 import ru.bellintegrator.practice.project.repository.DocRepository;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.user.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -43,20 +46,20 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public GetUserView findUser(Integer id) {
+    public DataView findUser(Integer id) {
         User user = userDao.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException("User with id: " + id + " not found");
         }
-        GetUserView getUserView = mapperFacade.map(user, GetUserView.class);
+        GetUserView map = mapperFacade.map(user, GetUserView.class);
         CountryDictionary countryDictionary = user.getCountryDictionary();
-        getUserView.setCitizenshipCode(countryDictionary.getCode());
-        getUserView.setCitizenshipName(countryDictionary.getName());
+        map.setCitizenshipCode(countryDictionary.getCode());
+        map.setCitizenshipName(countryDictionary.getName());
         DocDictionary docDictionary = user.getUserDocument().getDocDictionary();
-        getUserView.setDocName(docDictionary.getName());
-        getUserView.setDocNumber(user.getUserDocument().getDocNumber());
-        getUserView.setDocDate(user.getUserDocument().getDocDate());
-        return getUserView;
+        map.setDocName(docDictionary.getName());
+        map.setDocNumber(user.getUserDocument().getDocNumber());
+        map.setDocDate(user.getUserDocument().getDocDate());
+        return new DataView(map);
     }
 
     /**
@@ -107,8 +110,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetListUserView findBy(@Valid FindUserView view) {
-        User user = userDao.filter(view);
-        return mapperFacade.map(user, GetListUserView.class);
+    public DataView findBy(@Valid FindUserView view) {
+        List<User> user = userDao.filter(view);
+        List<GetListUserView> map =  mapperFacade.mapAsList(user, GetListUserView.class);
+        return new DataView(map);
     }
 }

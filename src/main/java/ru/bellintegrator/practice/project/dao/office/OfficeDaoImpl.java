@@ -58,10 +58,25 @@ public class OfficeDaoImpl implements OfficeDao {
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 
         Root<Office> officeRoot = criteria.from(Office.class);
-        Join<Office, Organization> join = officeRoot.join("organization");
-        join.on(builder.equal(officeRoot.get("organization"), join.get("id")));
-        Predicate predicateName = builder.equal(officeRoot.get("id"), view.getOrgId());
-        predicateList.add(predicateName);
+  //      Join<Office, Organization> join = officeRoot.join("organization");
+        Predicate id = builder.equal(officeRoot.get("id"), view.getOrgId());
+        predicateList.add(id);
+
+        if (view.getName() != null) {
+            Predicate name = builder.equal(officeRoot.get("name"), view.getName());
+            predicateList.add(name);
+        }
+
+        if (view.getPhone() != null) {
+            Predicate phone = builder.equal(officeRoot.get("phone"), view.getPhone());
+            predicateList.add(phone);
+        }
+
+        if (view.getIsActive() != null) {
+            Predicate isActive = builder.equal(officeRoot.get("isActive"), view.getIsActive());
+            predicateList.add(isActive);
+        }
+
         criteria.where(predicateList.toArray(new Predicate[predicateList.size()]));
         TypedQuery<Office> query = em.createQuery(criteria);
         return query.getResultList();

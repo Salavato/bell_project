@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.model.UserDocument;
 import ru.bellintegrator.practice.project.service.documents.UserDocumentServiceImpl;
+import ru.bellintegrator.practice.project.view.ResultView;
 import ru.bellintegrator.practice.project.view.documents.UserDocumentView;
 
 import java.util.List;
@@ -30,8 +31,8 @@ public class UserDocumentController {
 
     @ApiOperation(value = "Обновить документ сотрудника", httpMethod = "POST")
     @PostMapping("api/userdoc/update")
-    public String updateUserDoc(@RequestBody UserDocumentView view) {
+    public ResultView updateUserDoc(@RequestBody UserDocumentView view) {
         userDocumentService.updateUserDocument(view);
-        return "success";
+        return new ResultView();
     }
 }

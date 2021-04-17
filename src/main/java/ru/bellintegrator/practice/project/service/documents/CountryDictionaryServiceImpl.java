@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.docements.CountryDictionaryDaoImpl;
 import ru.bellintegrator.practice.project.model.CountryDictionary;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.documents.CountryDictionaryView;
 
 import javax.validation.Valid;
@@ -31,9 +32,10 @@ public class CountryDictionaryServiceImpl implements CountryDictionaryService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<CountryDictionaryView> allCountry() {
+    public DataView allCountry() {
         List<CountryDictionary> all = dao.allCountry();
-        return mapperFacade.mapAsList(all, CountryDictionaryView.class);
+        List<CountryDictionaryView> map = mapperFacade.mapAsList(all, CountryDictionaryView.class);
+        return new DataView(map);
     }
 
     /**

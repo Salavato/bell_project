@@ -37,5 +37,5 @@ public interface UserDao {
      * Поиск User по фильтру
      * @param view
      */
-    User filter(FindUserView view);
+    List<User> filter(FindUserView view);
 }

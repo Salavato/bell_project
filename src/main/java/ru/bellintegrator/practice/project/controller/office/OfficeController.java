@@ -5,11 +5,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.service.office.OfficeServiceImpl;
+import ru.bellintegrator.practice.project.view.DataView;
+import ru.bellintegrator.practice.project.view.ResultView;
 import ru.bellintegrator.practice.project.view.office.FindOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetOfficeView;
 import ru.bellintegrator.practice.project.view.office.SaveOfficeView;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 
@@ -26,27 +29,27 @@ public class OfficeController {
 
     @GetMapping("/api/office/{id}")
     @ApiOperation(value = "Получить офис по идентификатору", httpMethod = "GET")
-    public GetOfficeView officeGet(@PathVariable(name = "id") Integer id) {
+    public DataView officeGet(@PathVariable(name = "id") Integer id) {
         return officeService.findOffice(id);
     }
 
     @PostMapping("api/office/save")
     @ApiOperation(value = "Добавить новый офис", httpMethod = "POST")
-    public String officePost(@RequestBody SaveOfficeView view) {
+    public ResultView officePost(@RequestBody SaveOfficeView view) {
         officeService.saveOffice(view);
-        return "success";
+        return new ResultView();
     }
 
     @ApiOperation(value = "Обновить офис", httpMethod = "POST")
     @PostMapping("api/office/update")
-    public String officeUpdate(@RequestBody GetOfficeView view) {
+    public ResultView officeUpdate(@RequestBody GetOfficeView view) {
         officeService.update(view);
-        return "success";
+        return new ResultView();
     }
 
     @ApiOperation(value = "Поиск офиса по фильтру", httpMethod = "POST")
     @PostMapping("api/office/list")
-    public List<GetListOfficeView> officeFind(@RequestBody FindOfficeView findOfficeView) {
+    public DataView officeFind(@RequestBody FindOfficeView findOfficeView) {
         return officeService.findBy(findOfficeView);
     }
 }

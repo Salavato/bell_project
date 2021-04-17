@@ -82,4 +82,5 @@ public class Organization {
      */
     @Column(nullable = false)
     private Boolean isActive;
+
 }

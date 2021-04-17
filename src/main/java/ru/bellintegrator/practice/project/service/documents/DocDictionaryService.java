@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.project.service.documents;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.project.model.DocDictionary;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import javax.validation.Valid;
@@ -18,7 +19,7 @@ public interface DocDictionaryService {
      *
      * @return {@DocDictionary}
      */
-    List<DocDictionaryView> all();
+    DataView all();
 
     /**
      * Добавить новое документ справочника

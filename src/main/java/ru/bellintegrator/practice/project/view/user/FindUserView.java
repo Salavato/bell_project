@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 public class FindUserView {
 
     @ApiModelProperty(value = "Поле для идентификатора офиса", example = "1")
+    @NotNull
     public Integer officeId;
 
     @ApiModelProperty(value = "Поле имени сотрудника", example = "Андрей")

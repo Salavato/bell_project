@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.docements.DocDictionaryDaoImpl;
 import ru.bellintegrator.practice.project.model.DocDictionary;
+import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import javax.validation.Valid;
@@ -34,9 +35,10 @@ public class DocDictionaryServiceImpl implements DocDictionaryService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<DocDictionaryView> all() {
+    public DataView all() {
         List<DocDictionary> all = dao.allDoc();
-        return mapperFacade.mapAsList(all, DocDictionaryView.class);
+        List<DocDictionaryView> map = mapperFacade.mapAsList(all, DocDictionaryView.class);
+        return new DataView(map);
     }
 
 

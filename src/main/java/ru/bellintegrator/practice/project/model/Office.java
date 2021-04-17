@@ -1,12 +1,14 @@
 package ru.bellintegrator.practice.project.model;
 
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Класс служит для хранения офисов
@@ -66,5 +68,11 @@ public class Office {
      */
     @Column(nullable = true)
     private Boolean isActive;
+
+    /**
+     * Поле для связи с сотрудником
+     */
+    @OneToMany(mappedBy = "office")
+    private List<User> listUser;
 }
 
