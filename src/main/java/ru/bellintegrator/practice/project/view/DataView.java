@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "общее View для хранения других View")
 public class DataView {
 
-    Object data;
+    private Object data;
 }

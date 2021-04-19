@@ -10,5 +10,5 @@ import lombok.Data;
 public class ResultView {
 
     @JsonProperty("result")
-    String result = "success";
+    private String result = "success";
 }
