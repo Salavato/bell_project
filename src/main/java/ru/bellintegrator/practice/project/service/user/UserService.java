@@ -1,15 +1,10 @@
 package ru.bellintegrator.practice.project.service.user;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.project.model.User;
 import ru.bellintegrator.practice.project.view.DataView;
-import ru.bellintegrator.practice.project.view.office.GetOfficeView;
-import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
-import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
 import ru.bellintegrator.practice.project.view.user.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Сервис для сотрудника

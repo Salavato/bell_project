@@ -3,11 +3,9 @@ package ru.bellintegrator.practice.project.exception;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class OfficeNotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException {
 
-    public OfficeNotFoundException(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
-
-
 }

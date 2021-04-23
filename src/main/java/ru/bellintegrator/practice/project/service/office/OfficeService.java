@@ -3,14 +3,10 @@ package ru.bellintegrator.practice.project.service.office;
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.office.FindOfficeView;
-import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetOfficeView;
 import ru.bellintegrator.practice.project.view.office.SaveOfficeView;
-import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
-import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Сервис для офисов

@@ -3,6 +3,7 @@ package ru.bellintegrator.practice.project.controller.user;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.model.User;
 import ru.bellintegrator.practice.project.service.user.UserServiceImpl;
@@ -13,6 +14,7 @@ import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
 import ru.bellintegrator.practice.project.view.user.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -35,7 +37,7 @@ public class UserController {
 
     @ApiOperation(value = "Добавить нового сотрудника", httpMethod = "POST")
     @PostMapping("api/user/save")
-    public ResultView organizationPost(@RequestBody SaveUserView user) {
+    public ResultView userSave(@Valid @RequestBody SaveUserView user) {
         userService.saveUser(user);
         return new ResultView();
     }

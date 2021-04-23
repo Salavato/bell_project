@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.project.service.user;
 
+import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.docements.UserDocumentDaoImpl;
 import ru.bellintegrator.practice.project.dao.office.OfficeDaoImpl;
 import ru.bellintegrator.practice.project.dao.user.UserDaoImpl;
-import ru.bellintegrator.practice.project.exception.OfficeNotFoundException;
-import ru.bellintegrator.practice.project.exception.UserNotFoundException;
+import ru.bellintegrator.practice.project.exception.NotFoundException;
 import ru.bellintegrator.practice.project.model.*;
 import ru.bellintegrator.practice.project.repository.CountryRepository;
 import ru.bellintegrator.practice.project.repository.DocRepository;
@@ -17,11 +17,13 @@ import ru.bellintegrator.practice.project.view.user.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * {@inheritDoc}
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserDaoImpl userDao;
@@ -47,10 +49,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public DataView findUser(Integer id) {
-        User user = userDao.findUserById(id);
-        if (user == null) {
-            throw new UserNotFoundException("User with id: " + id + " not found");
-        }
+        User user = Optional.ofNullable(userDao.findUserById(id))
+                .orElseThrow(() -> new NotFoundException("User with id: " + id + " not found"));
         GetUserView map = mapperFacade.map(user, GetUserView.class);
         CountryDictionary countryDictionary = user.getCountryDictionary();
         map.setCitizenshipCode(countryDictionary.getCode());
@@ -68,8 +68,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(@Valid SaveUserView view) {
-        Office office = officeDao.findOfficeById(view.getOfficeId());
-        CountryDictionary countryDictionary = countryRepository.findById(view.getCitizenshipCode()).get();
+        Office office = Optional.ofNullable(officeDao.findOfficeById(view.getOfficeId()))
+                .orElseThrow(() -> new NotFoundException("Office with id: " + view.getOfficeId() + " not found"));
+        CountryDictionary countryDictionary = countryRepository.findById(view.getCitizenshipCode())
+                .orElseThrow(() -> new NotFoundException("CountryDictionary with CitizenshipCode: " + view.getCitizenshipCode() + " not found"));
         DocDictionary docDictionary = docRepository.findDocDictionaryByCode(view.getDocCode());
         UserDocument userDocument = mapperFacade.map(view, UserDocument.class);
         User user = mapperFacade.map(view, User.class);
@@ -87,8 +89,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(@Valid UpdateUserView view) {
-        User user = userDao.findUserById(view.getId());
-        Office office = officeDao.findOfficeById(view.getOfficeId());
+        User user = Optional.ofNullable(userDao.findUserById(view.getId()))
+                .orElseThrow(() -> new NotFoundException("User with id: " + view.getId() + " not found"));
+        Office office = Optional.ofNullable(officeDao.findOfficeById(view.getOfficeId()))
+                .orElseThrow(() -> new NotFoundException("Office with id: " + view.getOfficeId() + " not found"));
         user.setOffice(office);
         user.setFirstName(view.getFirstName());
         user.setSecondName(view.getSecondName());
@@ -112,7 +116,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public DataView findBy(@Valid FindUserView view) {
         List<User> user = userDao.filter(view);
-        List<GetListUserView> map =  mapperFacade.mapAsList(user, GetListUserView.class);
+        List<GetListUserView> map = mapperFacade.mapAsList(user, GetListUserView.class);
         return new DataView(map);
     }
 }

@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.office.OfficeDaoImpl;
 import ru.bellintegrator.practice.project.dao.organization.OrganizationDao;
-import ru.bellintegrator.practice.project.exception.OfficeNotFoundException;
-import ru.bellintegrator.practice.project.exception.OrganizationNotFoundException;
-import ru.bellintegrator.practice.project.exception.UserNotFoundException;
+import ru.bellintegrator.practice.project.exception.NotFoundException;
 import ru.bellintegrator.practice.project.model.Office;
 import ru.bellintegrator.practice.project.model.Organization;
 import ru.bellintegrator.practice.project.view.DataView;
@@ -19,6 +17,7 @@ import ru.bellintegrator.practice.project.view.office.SaveOfficeView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * {@inheritDoc}
@@ -44,10 +43,8 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public DataView findOffice(Integer id) {
-        Office office = dao.findOfficeById(id);
-        if (office == null) {
-            throw new OfficeNotFoundException("Office with id: " + id + " not found");
-        }
+        Office office = Optional.ofNullable(dao.findOfficeById(id))
+                .orElseThrow(() -> new NotFoundException("Office with id: " + id + " not found"));
         GetOfficeView map = mapperFacade.map(office, GetOfficeView.class);
         return new DataView(map);
     }
@@ -58,7 +55,8 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void saveOffice(@Valid SaveOfficeView view) {
-        Organization organization = organizationDao.findOrganizationById(view.getOrgId());
+        Organization organization = Optional.ofNullable(organizationDao.findOrganizationById(view.getOrgId()))
+                .orElseThrow(() -> new NotFoundException("Organization with id: " + view.getOrgId() + " not found"));
         Office office = mapperFacade.map(view, Office.class);
         office.setOrganization(organization);
         dao.saveOffice(office);
@@ -70,7 +68,8 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void update(@Valid GetOfficeView view) {
-        Office office = dao.findOfficeById(view.getId());
+        Office office = Optional.ofNullable(dao.findOfficeById(view.getId()))
+                .orElseThrow(() -> new NotFoundException("Office with id: " + view.getId() + " not found"));
         office.setId(view.getId());
         office.setName(view.getName());
         office.setAddress(view.getAddress());
