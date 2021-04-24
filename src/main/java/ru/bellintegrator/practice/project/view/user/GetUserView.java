@@ -19,7 +19,7 @@ public class GetUserView {
     public Integer id;
 
     @ApiModelProperty(value = "Поле имени сотрудника", example = "Андрей")
-    @NotNull
+    @NotNull(message = "firstName field is null")
     @Size(max = 100)
     public String firstName;
 
@@ -32,7 +32,7 @@ public class GetUserView {
     public String middleName;
 
     @ApiModelProperty(value = "Поле для должности", example = "Директор")
-    @Column(nullable = false)
+    @NotNull(message = "position field is null")
     @Size(max = 100)
     public String position;
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Calendar;
 
@@ -18,7 +19,7 @@ public class GetListUserView {
     public Integer id;
 
     @ApiModelProperty(value = "Поле имени сотрудника", example = "Андрей")
-    @Column(nullable = false)
+    @NotNull(message = "firstName field is null")
     @Size(max = 100)
     public String firstName;
 
@@ -31,7 +32,7 @@ public class GetListUserView {
     public String middleName;
 
     @ApiModelProperty(value = "Поле для должности", example = "Директор")
-    @Column(nullable = false)
+    @NotNull(message = "position field is null")
     @Size(max = 100)
     public String position;
 

@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("Office with id: " + view.getOfficeId() + " not found"));
         CountryDictionary countryDictionary = countryRepository.findById(view.getCitizenshipCode())
                 .orElseThrow(() -> new NotFoundException("CountryDictionary with CitizenshipCode: " + view.getCitizenshipCode() + " not found"));
-        DocDictionary docDictionary = docRepository.findDocDictionaryByCode(view.getDocCode());
+        DocDictionary docDictionary = Optional.ofNullable(docRepository.findDocDictionaryByCode(view.getDocCode()))
+                .orElseThrow(() -> new NotFoundException("DocDictionary with docCode " + view.getDocCode() + " not found"));
         UserDocument userDocument = mapperFacade.map(view, UserDocument.class);
         User user = mapperFacade.map(view, User.class);
         user.setOffice(office);
@@ -100,14 +101,16 @@ public class UserServiceImpl implements UserService {
         user.setPosition(view.getMiddleName());
         user.setPhone(view.getPhone());
         UserDocument userDocument = userDocumentDao.findUserDocumentById(view.getId());
-        DocDictionary docDictionary = docRepository.findDocDictionaryByCode(view.getDocCode());
+        DocDictionary docDictionary = Optional.ofNullable(docRepository.findDocDictionaryByCode(view.getDocCode()))
+                .orElseThrow(() -> new NotFoundException("DocDictionary with docCode " + view.getDocCode() + " not found"));
         docDictionary.setName(view.getDocName());
         docDictionary.setCode(view.getDocCode());
         userDocument.setDocDictionary(docDictionary);
         userDocument.setDocNumber(view.getDocNumber());
         userDocument.setDocDate(view.getDocDate());
         user.setUserDocument(userDocument);
-        CountryDictionary countryDictionary = countryRepository.findById(view.getCitizenshipCode()).get();
+        CountryDictionary countryDictionary = countryRepository.findById(view.getCitizenshipCode())
+                .orElseThrow(() -> new NotFoundException("CountryDictionary with CitizenshipCode: " + view.getCitizenshipCode() + " not found"));
         countryDictionary.setCode(view.getCitizenshipCode());
         user.setCountryDictionary(countryDictionary);
         userDao.update(user);

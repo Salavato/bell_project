@@ -10,6 +10,7 @@ import ru.bellintegrator.practice.project.dao.docements.UserDocumentDaoImpl;
 import ru.bellintegrator.practice.project.model.UserDocument;
 import ru.bellintegrator.practice.project.view.documents.UserDocumentView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class UserDocumentServiceImpl implements UserDocumentService {
      */
     @Override
     @Transactional
-    public void updateUserDocument(UserDocumentView view) {
+    public void updateUserDocument(@Valid UserDocumentView view) {
         UserDocument document = dao.findUserDocumentById(view.getIdUser());
         document.setDocNumber("2А-1-У8");
         dao.updateUserDoc(document);

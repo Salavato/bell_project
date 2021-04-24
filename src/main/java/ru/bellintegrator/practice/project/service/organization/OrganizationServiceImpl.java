@@ -51,7 +51,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public void save(SaveOrganizationView view) {
+    public void save(@Valid SaveOrganizationView view) {
         Organization organization = mapperFacade.map(view, Organization.class);
         dao.save(organization);
     }
@@ -61,7 +61,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public void update(GetOrganizationView view) {
+    public void update(@Valid GetOrganizationView view) {
         Organization organization = Optional.ofNullable(dao.findOrganizationById(view.getId()))
                 .orElseThrow(() -> new NotFoundException("Organization with id: " + view.getId() + " not found"));
         organization.setId(view.getId());
