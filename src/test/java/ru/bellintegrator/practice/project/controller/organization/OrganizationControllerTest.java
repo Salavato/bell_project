@@ -1,59 +1,46 @@
 package ru.bellintegrator.practice.project.controller.organization;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.practice.project.model.Organization;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import ru.bellintegrator.practice.project.repository.OrganizationRepository;
-import ru.bellintegrator.practice.project.view.DataView;
-import ru.bellintegrator.practice.project.view.ResultView;
+import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.SaveOrganizationView;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class OrganizationControllerTest {
 
-//    @Test
-//    void orgGet() {
-//        //входные данные
-//
-//        //вызов тестируемого метода
-//
-//        //проверка полученных результатов
-//        assertEquals(1,1);
-//    }
 
-    @Autowired
-    OrganizationController organizationController;
     @Autowired
     OrganizationRepository organizationRepository;
+    @Autowired
+    MockMvc mockMvc;
 
+    @SneakyThrows
     @Test
     void orgGet() {
-        //входные данные
-        int id = 1;
-        String expectedFullName = "ООО Ромашка";
-
-        //вызов тестируемого метода
-        DataView rez = organizationController.orgGet(id);
-
-//        GetOrganizationView getOrganizationView = new GetOrganizationView();
-//        DataView dataView = new DataView(getOrganizationView);
-//        dataView.getData();
-
-        //проверка полученных результатов
-        GetOrganizationView actual = (GetOrganizationView) rez.getData();
-        assertEquals(expectedFullName, actual.getFullName());
-        assertEquals("7718057567", actual.getInn());
+        mockMvc.perform(get("/api/organization/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.data.name").value("Ромашка"));
     }
 
-
+    @SneakyThrows
     @Test
     void organizationPost() {
-        //входные данные
         SaveOrganizationView view = new SaveOrganizationView();
         view.setName("Компания");
         view.setFullName("Полная компания");
@@ -61,15 +48,12 @@ class OrganizationControllerTest {
         view.setKpp("51515144");
         view.setAddress("Москва, Петровка, 10");
 
-        //вызов тестируемого метода
-        organizationController.organizationPost(view);
-
-        //проверка полученных результатов
-        Organization actualOrg = organizationRepository.findById(3).get();
-        assertEquals(view.getName(), actualOrg.getName());
-        assertEquals(view.getFullName(), actualOrg.getFullName());
+        mockMvc.perform(post("/api/organization/save").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
+    @SneakyThrows
     @Test
     void organizationUpdate() {
         GetOrganizationView view = new GetOrganizationView();
@@ -80,13 +64,34 @@ class OrganizationControllerTest {
         view.setKpp("222333443");
         view.setAddress("Москва, Оружейный, 41");
 
-        //вызов тестируемого метода
-        organizationController.organizationUpdate(view);
+        mockMvc.perform(post("/api/organization/update").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 
-        //проверка полученных результатов
-        Organization actualUpdateOrg = organizationRepository.findById(2).get();
-        assertEquals(view.getName(), actualUpdateOrg.getName());
-        assertEquals(view.getInn(), view.getInn());
 
+    @SneakyThrows
+    @Test
+    void organizationFindList() {
+        FindOrganizationView view = new FindOrganizationView();
+        view.setName("Ромашка");
+
+        mockMvc.perform(post("/api/organization/list").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.data[0].name").value("Ромашка"));
+    }
+
+
+    private static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

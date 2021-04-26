@@ -28,7 +28,8 @@ public class OrganizationController {
     @ApiOperation(value = "Получить организацию по идентификатору", httpMethod = "GET")
     @GetMapping("/api/organization/{id}")
     public DataView orgGet(@PathVariable(name = "id") Integer id) {
-        return organizationService.findOrg(id);
+      //  throw new RuntimeException("runTime");
+       return organizationService.findOrg(id);
     }
 
     @ApiOperation(value = "Добавить новую организацию", httpMethod = "POST")
