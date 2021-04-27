@@ -32,12 +32,15 @@ https://github.com/Salavato/bell_project/blob/main/src/main/resources/schema.sql
 * Spring, Hibernate
 * Maven
 * H2
-* Swagger
+* Swagger http://localhost:8888//swagger-ui.html#/
 
 Используется многослойная архитектура со следующими слоями:
 Conroller - слой представления, ответственный за реализацию API
 DAO - слой доступа к данным (хранения данных)
 Service - слой бизнес-логики
+
+
+
 
 
 

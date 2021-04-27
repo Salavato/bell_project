@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(view.getFirstName());
         user.setSecondName(view.getSecondName());
         user.setMiddleName(view.getMiddleName());
-        user.setPosition(view.getMiddleName());
+        user.setPosition(view.getPosition());
         user.setPhone(view.getPhone());
         UserDocument userDocument = userDocumentDao.findUserDocumentById(view.getId());
         DocDictionary docDictionary = Optional.ofNullable(docRepository.findDocDictionaryByCode(view.getDocCode()))

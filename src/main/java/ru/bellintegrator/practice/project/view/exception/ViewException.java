@@ -12,6 +12,4 @@ public class ViewException {
 
     @ApiModelProperty(value = "Сообщение", example = "Error")
     private String message;
-
-    private String exceptionCode;
 }

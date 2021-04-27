@@ -8,11 +8,8 @@ import ru.bellintegrator.practice.project.service.organization.OrganizationServi
 import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.ResultView;
 import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
-import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.SaveOrganizationView;
-
-import java.util.List;
 
 @RestController
 @Api(value = "OrganizationController", description = "Управление информацией об организация")
@@ -28,7 +25,7 @@ public class OrganizationController {
     @ApiOperation(value = "Получить организацию по идентификатору", httpMethod = "GET")
     @GetMapping("/api/organization/{id}")
     public DataView orgGet(@PathVariable(name = "id") Integer id) {
-      //  throw new RuntimeException("runTime");
+     //   throw new RuntimeException("runTime");
        return organizationService.findOrg(id);
     }
 

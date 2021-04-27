@@ -1,7 +1,6 @@
-package ru.bellintegrator.practice.project.controller.office;
+package ru.bellintegrator.practice.project.controller.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,50 +8,43 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.practice.project.view.DataView;
-import ru.bellintegrator.practice.project.view.ResultView;
-import ru.bellintegrator.practice.project.view.office.FindOfficeView;
-import ru.bellintegrator.practice.project.view.office.GetOfficeView;
-import ru.bellintegrator.practice.project.view.office.SaveOfficeView;
-import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
-import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
-import ru.bellintegrator.practice.project.view.organization.SaveOrganizationView;
+import ru.bellintegrator.practice.project.view.user.FindUserView;
+import ru.bellintegrator.practice.project.view.user.SaveUserView;
+import ru.bellintegrator.practice.project.view.user.UpdateUserView;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class OfficeControllerTest {
+class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @SneakyThrows
     @Test
-    void officeGet() {
-        mockMvc.perform(get("/api/office/1")
+    void userGet() {
+        mockMvc.perform(get("/api/user/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.name").value("Офис_1"));
+                .andExpect(jsonPath("$.data.firstName").value("Иван"));
     }
 
-    @SneakyThrows
     @Test
-    void officePost() {
-        SaveOfficeView view = new SaveOfficeView();
-        view.setOrgId(1);
-        view.setName("office_16");
-        view.setAddress("New York");
-        view.setPhone("212-555-52");
+    @SneakyThrows
+    void userSave() {
+        SaveUserView view = new SaveUserView();
+        view.setOfficeId(1);
+        view.setFirstName("Новое имя сотрудника");
+        view.setDocCode(7);
+        view.setCitizenshipCode(643);
+        view.setPosition("Дворник");
 
-        mockMvc.perform(post("/api/office/save").content(asJsonString(view))
+        mockMvc.perform(post("/api/user/save").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -62,35 +54,37 @@ class OfficeControllerTest {
 
     @SneakyThrows
     @Test
-    void officeUpdate() {
-        GetOfficeView view = new GetOfficeView();
-        view.setId(2);
-        view.setName("office_14");
-        view.setAddress("London");
-        view.setPhone("474-555-52");
+    void userUpdate() {
+        UpdateUserView view = new UpdateUserView();
+        view.setId(1);
+        view.setOfficeId(2);
+        view.setFirstName("Петрушка");
+        view.setCitizenshipCode(201);
+        view.setDocCode(7);
+        view.setPosition("Дворник");
 
-        mockMvc.perform(post("/api/office/update").content(asJsonString(view))
+        mockMvc.perform(post("/api/user/update").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.result").value("success"));
-
     }
 
     @SneakyThrows
     @Test
-    void officeFindList() {
-        FindOfficeView view = new FindOfficeView();
-        view.setOrgId(2);
-        view.setName("Офис_2");
+    void officeFind() {
+        FindUserView view = new FindUserView();
+        view.setOfficeId(1);
+        view.setFirstName("Иван");
+        view.setPosition("менеджер");
 
-        mockMvc.perform(post("/api/office/list").content(asJsonString(view))
+        mockMvc.perform(post("/api/user/list").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data[0].name").value("Офис_2"));
+                .andExpect(jsonPath("$.data[0].firstName").value("Иван"));
     }
 
     private static String asJsonString(final Object obj) {
@@ -102,5 +96,4 @@ class OfficeControllerTest {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -23,11 +23,10 @@ public class ExceptionHandlerController {
      */
     @ExceptionHandler(Exception.class)
     public ViewException modelException(Exception e) {
-        String randomCode = UUID.randomUUID().toString();
+        String errorCode = UUID.randomUUID().toString();
         ViewException viewException = new ViewException();
         viewException.setMessage("Sorry internal error");
-        viewException.setExceptionCode(randomCode);
-        log.error("ExceptionCode " + randomCode +" Message: "+ e.getMessage(), e);
+        log.error("ExceptionCode " + errorCode +" Message: "+ e.getMessage(), e);
         return viewException;
     }
 

@@ -50,7 +50,10 @@ class OrganizationControllerTest {
 
         mockMvc.perform(post("/api/organization/save").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result").value("success"));
     }
 
     @SneakyThrows
@@ -66,7 +69,10 @@ class OrganizationControllerTest {
 
         mockMvc.perform(post("/api/organization/update").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result").value("success"));
     }
 
 
