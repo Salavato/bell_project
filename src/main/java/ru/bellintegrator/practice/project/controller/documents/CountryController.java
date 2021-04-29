@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.project.service.documents.CountryDictionaryServiceImpl;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.ResultView;
 import ru.bellintegrator.practice.project.view.documents.CountryDictionaryView;
 
@@ -24,14 +23,13 @@ public class CountryController {
 
     @GetMapping("/api/country")
     @ApiOperation(value = "Получить список гражданств", httpMethod = "GET")
-    public DataView countryListGet() {
+    public List<CountryDictionaryView> countryListGet() {
         return countryDictionaryService.allCountry();
     }
 
     @ApiOperation(value = "Добавить новое гражданство", httpMethod = "POST")
     @PostMapping("api/country/save")
-    public ResultView organizationPost(@RequestBody CountryDictionaryView view) {
+    public void organizationPost(@RequestBody CountryDictionaryView view) {
         countryDictionaryService.add(view);
-        return new ResultView();
     }
 }

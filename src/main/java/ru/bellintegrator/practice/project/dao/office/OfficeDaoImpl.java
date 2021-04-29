@@ -58,7 +58,7 @@ public class OfficeDaoImpl implements OfficeDao {
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 
         Root<Office> officeRoot = criteria.from(Office.class);
-  //      Join<Office, Organization> join = officeRoot.join("organization");
+   //     Join<Office, Organization> join = officeRoot.join("organization");
         Predicate id = builder.equal(officeRoot.get("id"), view.getOrgId());
         predicateList.add(id);
 

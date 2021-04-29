@@ -1,8 +1,6 @@
 package ru.bellintegrator.practice.project.service.documents;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.project.model.CountryDictionary;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.documents.CountryDictionaryView;
 
 import javax.validation.Valid;
@@ -19,7 +17,7 @@ public interface CountryDictionaryService {
      *
      * @return {@CountryDictionary}
      */
-    DataView allCountry();
+    List<CountryDictionaryView> allCountry();
 
 
     /**

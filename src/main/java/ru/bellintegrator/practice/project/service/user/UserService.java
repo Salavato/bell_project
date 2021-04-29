@@ -1,10 +1,10 @@
 package ru.bellintegrator.practice.project.service.user;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.user.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Сервис для сотрудника
@@ -17,7 +17,7 @@ public interface UserService {
      *
      * @return {@UserTable}
      */
-    DataView findUser(Integer id);
+    GetUserView findUser(Integer id);
 
     /**
      * Добавить нового сотрудников
@@ -38,6 +38,6 @@ public interface UserService {
      *
      * @param view
      */
-    DataView findBy(@Valid FindUserView view);
+    List<GetListUserView> findBy(@Valid FindUserView view);
 
 }

@@ -12,7 +12,6 @@ import ru.bellintegrator.practice.project.exception.NotFoundException;
 import ru.bellintegrator.practice.project.model.*;
 import ru.bellintegrator.practice.project.repository.CountryRepository;
 import ru.bellintegrator.practice.project.repository.DocRepository;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.user.*;
 
 import javax.validation.Valid;
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public DataView findUser(Integer id) {
+    public GetUserView findUser(Integer id) {
         User user = Optional.ofNullable(userDao.findUserById(id))
                 .orElseThrow(() -> new NotFoundException("User with id: " + id + " not found"));
         GetUserView map = mapperFacade.map(user, GetUserView.class);
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
         map.setDocName(docDictionary.getName());
         map.setDocNumber(user.getUserDocument().getDocNumber());
         map.setDocDate(user.getUserDocument().getDocDate());
-        return new DataView(map);
+        return map;
     }
 
     /**
@@ -117,9 +116,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DataView findBy(@Valid FindUserView view) {
+    public List<GetListUserView> findBy(@Valid FindUserView view) {
         List<User> user = userDao.filter(view);
         List<GetListUserView> map = mapperFacade.mapAsList(user, GetListUserView.class);
-        return new DataView(map);
+        return map;
     }
 }

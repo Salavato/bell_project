@@ -26,13 +26,11 @@ public class UserDocumentController {
     @GetMapping("/api/userdoc")
     public List<UserDocumentView> userDocGet() {
         return userDocumentService.allUserDocument();
-
     }
 
     @ApiOperation(value = "Обновить документ сотрудника", httpMethod = "POST")
     @PostMapping("api/userdoc/update")
-    public ResultView updateUserDoc(@RequestBody UserDocumentView view) {
+    public void updateUserDoc(@RequestBody UserDocumentView view) {
         userDocumentService.updateUserDocument(view);
-        return new ResultView();
     }
 }

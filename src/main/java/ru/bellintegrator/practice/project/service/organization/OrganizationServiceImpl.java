@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.organization.OrganizationDaoImpl;
 import ru.bellintegrator.practice.project.exception.NotFoundException;
+import ru.bellintegrator.practice.project.exception.hendlerexception.ExceptionHandlerController;
 import ru.bellintegrator.practice.project.model.Organization;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.organization.FindOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetListOrganizationView;
 import ru.bellintegrator.practice.project.view.organization.GetOrganizationView;
@@ -39,11 +39,10 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public DataView findOrg(Integer id) {
+    public GetOrganizationView findOrg(Integer id) {
         Organization organization = Optional.ofNullable(dao.findOrganizationById(id))
                 .orElseThrow(() -> new NotFoundException("Organization with id: " + id + " not found"));
-        GetOrganizationView map = mapperFacade.map(organization, GetOrganizationView.class);
-        return new DataView(map);
+        return mapperFacade.map(organization, GetOrganizationView.class);
     }
 
     /**
@@ -55,6 +54,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = mapperFacade.map(view, Organization.class);
         dao.save(organization);
     }
+
 
     /**
      * {@inheritDoc}
@@ -77,10 +77,9 @@ public class OrganizationServiceImpl implements OrganizationService {
      * {@inheritDoc}
      */
     @Override
-    public DataView findBy(@Valid FindOrganizationView view) {
-        List<Organization> list = Optional.ofNullable(dao.filter(view))
-                .orElseThrow(() -> new NotFoundException(view.getName() + "Not found"));
-        List<GetListOrganizationView> map = mapperFacade.mapAsList(list, GetListOrganizationView.class);
-        return new DataView(map);
+    @Transactional
+    public List<GetListOrganizationView> findBy(@Valid FindOrganizationView view) {
+        List<Organization> list = dao.filter(view);
+        return mapperFacade.mapAsList(list, GetListOrganizationView.class);
     }
 }

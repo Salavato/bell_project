@@ -1,14 +1,11 @@
 package ru.bellintegrator.practice.project.service.documents;
 
 import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.project.dao.docements.DocDictionaryDaoImpl;
 import ru.bellintegrator.practice.project.model.DocDictionary;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.documents.DocDictionaryView;
 
 import javax.validation.Valid;
@@ -35,10 +32,10 @@ public class DocDictionaryServiceImpl implements DocDictionaryService {
      */
     @Override
     @Transactional(readOnly = true)
-    public DataView all() {
+    public List<DocDictionaryView> all() {
         List<DocDictionary> all = dao.allDoc();
         List<DocDictionaryView> map = mapperFacade.mapAsList(all, DocDictionaryView.class);
-        return new DataView(map);
+        return map;
     }
 
 

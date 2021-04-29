@@ -9,7 +9,6 @@ import ru.bellintegrator.practice.project.dao.organization.OrganizationDao;
 import ru.bellintegrator.practice.project.exception.NotFoundException;
 import ru.bellintegrator.practice.project.model.Office;
 import ru.bellintegrator.practice.project.model.Organization;
-import ru.bellintegrator.practice.project.view.DataView;
 import ru.bellintegrator.practice.project.view.office.FindOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetListOfficeView;
 import ru.bellintegrator.practice.project.view.office.GetOfficeView;
@@ -42,11 +41,11 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public DataView findOffice(Integer id) {
+    public GetOfficeView findOffice(Integer id) {
         Office office = Optional.ofNullable(dao.findOfficeById(id))
                 .orElseThrow(() -> new NotFoundException("Office with id: " + id + " not found"));
         GetOfficeView map = mapperFacade.map(office, GetOfficeView.class);
-        return new DataView(map);
+        return map;
     }
 
     /**
@@ -78,9 +77,9 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
-    public DataView findBy(@Valid FindOfficeView view) {
+    @Transactional
+    public List<GetListOfficeView> findBy(@Valid FindOfficeView view) {
         List<Office> list = dao.filter(view);
-        List<GetListOfficeView> map = mapperFacade.mapAsList(list, GetListOfficeView.class);
-        return new DataView(map);
+        return mapperFacade.mapAsList(list, GetListOfficeView.class);
     }
 }

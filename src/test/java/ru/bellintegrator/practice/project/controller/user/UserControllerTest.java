@@ -25,18 +25,29 @@ class UserControllerTest {
 
     @SneakyThrows
     @Test
-    void userGet() {
+    void userGetSuccessTest() {
         mockMvc.perform(get("/api/user/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.firstName").value("Иван"));
+                .andExpect(jsonPath("$.firstName").value("Иван"));
+    }
+
+    @SneakyThrows
+    @Test
+    void userGetNotExistFailTest() {
+        mockMvc.perform(get("/api/user/11")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("User with id: 11 not found"));
     }
 
     @Test
     @SneakyThrows
-    void userSave() {
+    void userSaveSuccessTest() {
         SaveUserView view = new SaveUserView();
         view.setOfficeId(1);
         view.setFirstName("Новое имя сотрудника");
@@ -52,13 +63,31 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.result").value("success"));
     }
 
+    @Test
+    @SneakyThrows
+    void userSaveFailTes() {
+        SaveUserView view = new SaveUserView();
+        //   view.setOfficeId(1);
+        view.setFirstName("Новое имя сотрудника");
+        view.setDocCode(7);
+        view.setCitizenshipCode(643);
+        view.setPosition("Дворник");
+
+        mockMvc.perform(post("/api/user/save").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("Sorry internal error"));
+    }
+
     @SneakyThrows
     @Test
-    void userUpdate() {
+    void userUpdateSuccessTest() {
         UpdateUserView view = new UpdateUserView();
         view.setId(1);
         view.setOfficeId(2);
-        view.setFirstName("Петрушка");
+        view.setFirstName("Иван");
         view.setCitizenshipCode(201);
         view.setDocCode(7);
         view.setPosition("Дворник");
@@ -73,10 +102,45 @@ class UserControllerTest {
 
     @SneakyThrows
     @Test
-    void officeFind() {
+    void userUpdateFailTes() {
+        UpdateUserView view = new UpdateUserView();
+        view.setId(1);
+        //  view.setOfficeId(2);
+        view.setFirstName("Иван");
+        view.setCitizenshipCode(201);
+        view.setDocCode(7);
+        view.setPosition("Дворник");
+
+        mockMvc.perform(post("/api/user/update").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("Sorry internal error"));
+    }
+
+    @SneakyThrows
+    @Test
+    void officeFindFilterSuccessTest() {
+        FindUserView view = new FindUserView();
+        view.setOfficeId(2);
+        view.setFirstName("Bob");
+        view.setPosition("Менеджер");
+
+        mockMvc.perform(post("/api/user/list").content(asJsonString(view))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.[0].firstName").value("Bob"));
+    }
+
+    @SneakyThrows
+    @Test
+    void officeFindFilterFailTest() {
         FindUserView view = new FindUserView();
         view.setOfficeId(1);
-        view.setFirstName("Иван");
+        view.setFirstName("Петрушка");
         view.setPosition("менеджер");
 
         mockMvc.perform(post("/api/user/list").content(asJsonString(view))
@@ -84,7 +148,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data[0].firstName").value("Иван"));
+                .andExpect(content().string("[]"));
     }
 
     private static String asJsonString(final Object obj) {

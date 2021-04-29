@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.project.exception.hendlerexception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,13 +17,14 @@ import java.util.UUID;
  */
 @RestControllerAdvice
 @Slf4j
+@Order(value = 2)
 public class ExceptionHandlerController {
 
     /**
      * Метод для обработки исключений
      */
-    @ExceptionHandler(Exception.class)
-    public ViewException modelException(Exception e) {
+    @ExceptionHandler(Throwable.class)
+    public ViewException modelException(Throwable e) {
         String errorCode = UUID.randomUUID().toString();
         ViewException viewException = new ViewException();
         viewException.setMessage("Sorry internal error");
