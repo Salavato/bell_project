@@ -145,10 +145,10 @@ class UserControllerTest {
 
         mockMvc.perform(post("/api/user/list").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-//                .andExpect(content()
-//                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(content().string("[]"));
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("{\"data\":[]}"));
     }
 
     private static String asJsonString(final Object obj) {

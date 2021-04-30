@@ -145,10 +145,10 @@ class OrganizationControllerTest {
 
         mockMvc.perform(post("/api/organization/list").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-//                .andExpect(content()
-//                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.data").value("[]"));
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("{\"data\":[]}"));
     }
 
 

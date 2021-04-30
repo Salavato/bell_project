@@ -66,7 +66,7 @@ class OfficeControllerTest {
     @Test
     void officeSaveFailTes() {
         SaveOfficeView view = new SaveOfficeView();
-      //  view.setOrgId(1);
+        //  view.setOrgId(1);
         view.setName("office_16");
         view.setAddress("New York");
         view.setPhone("212-555-52");
@@ -137,10 +137,12 @@ class OfficeControllerTest {
 
         mockMvc.perform(post("/api/office/list").content(asJsonString(view))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-//                .andExpect(content()
-//                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(content().string("[]"));
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("{\"data\":[]}"));
+
+
     }
 
     private static String asJsonString(final Object obj) {
