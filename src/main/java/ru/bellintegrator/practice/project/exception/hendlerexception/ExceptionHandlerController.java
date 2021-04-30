@@ -23,8 +23,8 @@ public class ExceptionHandlerController {
     /**
      * Метод для обработки исключений
      */
-    @ExceptionHandler(Throwable.class)
-    public ViewException modelException(Throwable e) {
+    @ExceptionHandler(Exception.class)
+    public ViewException modelException(Exception e) {
         String errorCode = UUID.randomUUID().toString();
         ViewException viewException = new ViewException();
         viewException.setMessage("Sorry internal error");

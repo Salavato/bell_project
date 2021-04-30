@@ -7,6 +7,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import ru.bellintegrator.practice.project.view.exception.ViewException;
 
 import java.util.Objects;
 
@@ -20,11 +21,13 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        if (o instanceof ViewException) {
+            return o;
+        }
         if (Objects.isNull(o)) {
             return new ResultView();
         }
-        return o;
-
+        return new DataView(o);
     }
 
 }
